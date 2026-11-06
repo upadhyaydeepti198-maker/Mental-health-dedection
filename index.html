@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MindScore — Mental Health Assessment</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="app-shell">
+
+    <!-- TOP NAVBAR -->
+    <header class="top-navbar">
+
+      <div class="brand">
+
+        <div class="brand-mark">
+          <svg viewBox="0 0 48 48" fill="none">
+            <path d="M24 40V10"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"/>
+
+            <path d="M24 14C20 7 11 8 9 15C7 22 12 27 18 27"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"/>
+
+            <path d="M24 19C28 12 37 13 39 20C41 27 36 32 30 32"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"/>
+
+            <path d="M17 17C13 17 12 21 15 23
+                     M31 22C35 22 36 26 33 28
+                     M18 31C14 32 14 36 18 37
+                     M30 31C34 32 34 36 30 38"
+              stroke="currentColor"
+              stroke-width="1.7"
+              stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <div>
+          <div class="brand-name">MindScore</div>
+          <div class="brand-tagline">Understand. Improve. Thrive.</div>
+        </div>
+
+      </div>
+
+
+      <!-- NAVIGATION -->
+
+      <nav class="main-nav">
+
+        <a href="#assessment" class="nav-link active">
+          <span>⌂</span>
+          Assessment
+        </a>
+
+        <a href="#insights" class="nav-link active">
+          <span>♧</span>
+          Insights
+        </a>
+
+        <a href="#history" class="nav-link active">
+          <span>◷</span>
+          History
+        </a>
+
+        <a href="#recommendations" class="nav-link active">
+          <span>♧</span>
+          Recommendations
+        </a>
+
+        <a href="#resources" class="nav-link active">
+          <span>⊞</span>
+          Resources
+        </a>
+
+        <a href="#about" class="nav-link active">
+          <span>ⓘ</span>
+          About
+        </a>
+
+      </nav>
+
+
+      <!-- WEATHER -->
+
+      <div class="weather-box">
+        <span class="weather-icon">☀</span>
+
+        <div>
+         <strong id="temperature">--°C</strong>
+<small id="weather-condition">Loading...</small>
+        </div>
+      </div>
+
+    </header>
+    <script>
+async function updateWeather() {
+    const temperature = document.getElementById("temperature");
+    const condition = document.getElementById("weather-condition");
+
+    try {
+        const response = await fetch(
+            "https://api.open-meteo.com/v1/forecast?latitude=28.6139&longitude=77.2090&current=temperature_2m,weather_code&timezone=auto"
+        );
+
+        const data = await response.json();
+
+        const temp = data.current.temperature_2m;
+        const code = data.current.weather_code;
+
+        const weather = {
+            0: "Clear sky",
+            1: "Mostly clear",
+            2: "Partly cloudy",
+            3: "Cloudy",
+            45: "Foggy",
+            48: "Foggy",
+            51: "Drizzle",
+            53: "Drizzle",
+            55: "Drizzle",
+            61: "Rain",
+            63: "Rain",
+            65: "Heavy rain",
+            71: "Snow",
+            73: "Snow",
+            75: "Heavy snow",
+            80: "Rain showers",
+            81: "Rain showers",
+            82: "Heavy showers",
+            95: "Thunderstorm",
+            96: "Thunderstorm",
+            99: "Thunderstorm"
+        };
+
+        temperature.textContent = Math.round(temp) + "°C";
+        condition.textContent = weather[code] || "Current weather";
+
+    } catch (error) {
+        console.error(error);
+        temperature.textContent = "--°C";
+        condition.textContent = "Weather unavailable";
+    }
+}
+
+updateWeather();
+setInterval(updateWeather, 10 * 60 * 1000);
+</script>
+
+
+    <main class="main-content">
+
+
+      <!-- HERO -->
+<section
+ class="hero-card">
+
+        <div class="hero-copy">
+
+          <p class="hello">
+            Hello, Friend! 👋
+          </p>
+
+          <h1>
+            Your Mental Health
+            <span>Matters</span>
+          </h1>
+
+          <p class="hero-description">
+            Take a few minutes to answer some questions
+            and get your personal mental health score.
+          </p>
+
+          <div class="hero-button">
+            <span>♥</span>
+            Better Awareness
+            <b>→</b>
+            Better Choices
+          </div>
+
+        </div>
+
+
+        <!-- HERO IMAGE AREA -->
+<div class="hero-art">
+
+    <div class="hero-image-placeholder">
+        <img src="hero.jpeg" alt="Mental health meditation" class="hero-image">
+    </div>
+
+</div>
+
+      </section>
+
+
+
+      <!-- DASHBOARD -->
+
+      <div class="dashboard-grid">
+
+
+        <!-- ASSESSMENT CARD -->
+
+        <section class="assessment-card" id="assessment">
+
+          <div class="assessment-heading">
+
+            <div class="assessment-icon">
+              📋
+            </div>
+
+            <div>
+
+              <h2>
+                Personal &amp; Lifestyle Assessment
+              </h2>
+
+              <p>
+                Answer the questions below honestly to get your mental health score.
+              </p>
+
+            </div>
+
+            <div class="step-area">
+
+              <span id="step-counter">Step 1 of 4</span>
+
+              <div class="progress-line">
+                <div class="progress-fill" id="progress-fill"></div>
+              </div>
+
+            </div>
+
+          </div>
+
+
+
+          <form id="predict-form">
+
+
+            <!-- SECTION 1 -->
+
+            <fieldset class="assessment-section">
+
+              <legend>
+                <span>1</span>
+                Personal Information
+              </legend>
+
+
+              <div class="form-grid three-columns">
+
+
+                <div class="field">
+
+                  <label for="age">
+                    Age
+                  </label>
+
+                  <input
+                    type="number"
+                    id="age"
+                    name="age"
+                    placeholder="Enter your age"
+                    min="10"
+                    max="100"
+                  >
+
+                </div>
+
+
+
+                <div class="field">
+
+                  <label for="gender">
+                    Gender
+                  </label>
+
+                  <select id="gender" name="gender">
+
+                    <option value="">
+                      Select gender
+                    </option>
+
+                    <option value="Male">
+                      Male
+                    </option>
+
+                    <option value="Female">
+                      Female
+                    </option>
+
+                  </select>
+
+                </div>
+
+
+
+                <div class="field">
+
+                  <label for="academic_level">
+                    Education Level
+                  </label>
+
+                  <select
+                    id="academic_level"
+                    name="academic_level"
+                  >
+
+                    <option value="">
+                      Select education level
+                    </option>
+
+                    <option value="High School">
+                      High School
+                    </option>
+
+                    <option value="Undergraduate">
+                      Undergraduate
+                    </option>
+
+                    <option value="Graduate">
+                      Graduate
+                    </option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+            </fieldset>
+
+
+
+            <!-- SECTION 2 -->
+
+            <fieldset class="assessment-section">
+
+              <legend>
+                <span>2</span>
+                Academic &amp; Digital Habits
+              </legend>
+
+
+              <div class="form-grid three-columns">
+
+
+                <div class="field">
+
+                  <label for="study_hours">
+                    Study Hours per Day
+                  </label>
+
+                  <input
+                    type="number"
+                    id="study_hours"
+                    name="study_hours"
+                    placeholder="e.g. 5"
+                    min="0"
+                    max="24"
+                    step="0.1"
+                  >
+
+                </div>
+
+
+
+                <div class="field">
+
+                  <label for="avg_daily_usage_hours">
+                    Screen Time (hours/day)
+                  </label>
+
+                  <input
+                    type="number"
+                    id="avg_daily_usage_hours"
+                    name="avg_daily_usage_hours"
+                    placeholder="e.g. 4"
+                    min="0"
+                    max="24"
+                    step="0.1"
+                  >
+
+                </div>
+
+
+
+                <div class="field">
+
+                  <label for="most_used_platform">
+                    Social Media Usage
+                  </label>
+
+                  <select
+                    id="most_used_platform"
+                    name="most_used_platform"
+                  >
+
+                    <option value="">
+                      Select usage level
+                    </option>
+
+                    <option value="Instagram">
+                      Instagram
+                    </option>
+
+                    <option value="YouTube">
+                      YouTube
+                    </option>
+
+                    <option value="Facebook">
+                      Facebook
+                    </option>
+
+                    <option value="TikTok">
+                      TikTok
+                    </option>
+
+                    <option value="WhatsApp">
+                      WhatsApp
+                    </option>
+
+                    <option value="Twitter">
+                      Twitter
+                    </option>
+
+                    <option value="Snapchat">
+                      Snapchat
+                    </option>
+
+                    <option value="LinkedIn">
+                      LinkedIn
+                    </option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+            </fieldset>
+
+
+
+            <!-- SECTION 3 -->
+
+            <fieldset class="assessment-section">
+
+              <legend>
+                <span>3</span>
+                Lifestyle &amp; Stress
+              </legend>
+
+
+              <div class="form-grid three-columns">
+
+
+                <div class="field">
+
+                  <label for="sleep_hours_per_night">
+                    Sleep Hours per Night
+                  </label>
+
+                  <input
+                    type="number"
+                    id="sleep_hours_per_night"
+                    name="sleep_hours_per_night"
+                    placeholder="e.g. 7"
+                    min="0"
+                    max="24"
+                    step="0.1"
+                  >
+
+                </div>
+
+
+
+                <div class="field">
+
+                  <label for="physical_activity_hours">
+                    Physical Activity
+                  </label>
+
+                  <select
+                    id="physical_activity_hours"
+                    name="physical_activity_hours"
+                  >
+
+                    <option value="">
+                      Select activity level
+                    </option>
+
+                    <option value="0.5">
+                      Low
+                    </option>
+
+                    <option value="1.5">
+                      Moderate
+                    </option>
+
+                    <option value="3">
+                      High
+                    </option>
+
+                  </select>
+
+                </div>
+
+
+
+                <div class="field">
+
+                  <label for="stress_level">
+                    Stress Level
+                  </label>
+
+                  <select
+                    id="stress_level"
+                    name="stress_level"
+                  >
+
+                    <option value="">
+                      Select stress level
+                    </option>
+
+                    <option value="Low">
+                      Low
+                    </option>
+
+                    <option value="Medium">
+                      Medium
+                    </option>
+
+                    <option value="High">
+                      High
+                    </option>
+
+                    <option value="Very High">
+                      Very High
+                    </option>
+
+                  </select>
+
+                </div>
+
+              </div>
+
+            </fieldset>
+
+
+
+            <!-- NEXT BUTTON -->
+
+            <div class="form-footer">
+
+              <button
+                type="submit"
+                class="next-btn"
+                id="submit-btn"
+              >
+
+                <span class="btn-label">
+                  Next
+                </span>
+
+                <span>
+                  →
+                </span>
+
+              </button>
+
+            </div>
+
+          </form>
+
+        </section>
+
+
+
+        <!-- SCORE CARD -->
+
+        <aside class="result-panel">
+
+          <div class="result-heading">
+
+            <div class="heart-icon">
+              ♥
+            </div>
+
+            <h2>
+              Your Mental Health Score
+            </h2>
+
+            <span class="live-badge">
+              ● Live
+            </span>
+
+          </div>
+
+
+          <div class="score-container">
+
+            <div class="score-circle">
+
+              <div class="score-inner">
+
+                <div class="brain-icon">
+                  🧠
+                </div>
+
+                <span id="score-number" class="score-number">
+    0
+</span>
+
+                <span class="score-max">
+                  /100
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="score-band"
+              id="score-band"
+            >
+              Waiting for the score count...
+            </div>
+
+           <p id="score-context" class="score-context"></p>
+
+
+
+            <div class="quick-tip">
+
+              <div class="tip-icon">
+                💡
+              </div>
+
+              <div>
+
+                <strong>
+                  Quick Tip
+                </strong>
+
+                <p>
+                  Try to get more sleep and reduce
+                  screen time for even better results.
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <button
+              type="button"
+              class="reset-btn"
+              id="reset-btn"
+            >
+              ↻ &nbsp; Reset Assessment
+            </button>
+
+          </div>
+
+        </aside>
+
+      </div>
+
+
+
+      <!-- FEATURE CARDS -->
+
+      <section class="feature-grid">
+
+
+        <article
+          class="feature-card"
+          id="history"
+        >
+
+          <div class="feature-icon">
+            📊
+          </div>
+
+          <div>
+
+            <h3>
+              Track Progress
+            </h3>
+
+            <p>
+              Monitor your mental
+              well-being over time
+            </p>
+
+          </div>
+
+        </article>
+
+
+
+        <article
+          class="feature-card"
+          id="insights"
+        >
+
+          <div class="feature-icon">
+            🏠
+          </div>
+
+          <div>
+
+            <h3>
+              Get Insights
+            </h3>
+
+            <p>
+              Understand your habits
+              and patterns
+            </p>
+
+          </div>
+
+        </article>
+
+
+
+        <article
+          class="feature-card"
+          id="recommendations"
+        >
+
+          <div class="feature-icon">
+            🌿
+          </div>
+
+          <div>
+
+            <h3>
+              Build Healthy Habits
+            </h3>
+
+            <p>
+              Small changes create
+              big results
+            </p>
+
+          </div>
+
+        </article>
+
+
+
+        <article
+          class="feature-card"
+          id="resources"
+        >
+
+          <div class="feature-icon">
+            💙
+          </div>
+
+          <div>
+
+            <h3>
+              Live Better
+            </h3>
+
+            <p>
+              A healthier mind
+              leads to a happier you
+            </p>
+
+          </div>
+
+        </article>
+
+      </section>
+
+
+
+      <!-- FOOTER -->
+
+      <footer id="about">
+
+        <span>
+          Your Mental Health
+        </span>
+
+        <span>
+          •
+        </span>
+
+        <span>
+          Our Priority
+        </span>
+
+        <span>
+          ♥
+        </span>
+
+      </footer>
+
+    </main>
+
+  </div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
